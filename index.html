@@ -3,61 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
+    <title>Video Player System</title>
     <style>
-        /* Latar Belakang Gelap Elegan */
-        body { 
-            background: radial-gradient(circle, #2c2c2c 0%, #000000 100%); 
-            color: #fff; margin: 0; font-family: sans-serif; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
-        }
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         
-        /* Container Player */
-        .video-box {
-            position: relative; width: 90%; max-width: 500px; aspect-ratio: 16/9;
-            background: #111; border: 1px solid #333; border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+        #player-container { 
+            position: relative; width: 95%; max-width: 500px; aspect-ratio: 16/9; 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #b30000;
+            background-size: cover; background-position: center; 
+            border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            border: 2px solid #ff0000; cursor: pointer; box-shadow: 0 0 25px rgba(255,0,0,0.4);
+            text-align: center; padding: 15px; box-sizing: border-box;
         }
 
-        /* Tombol Play Transparan Mewah */
-        .play-circle {
-            width: 70px; height: 70px; background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.8); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px); transition: 0.3s;
+        .warning-text {
+            font-weight: bold; font-size: 17px; line-height: 1.4; color: #fff;
+            margin-bottom: 15px; text-shadow: 2px 2px 5px #000;
         }
-        .play-circle::after {
-            content: ""; border-style: solid; border-width: 15px 0 15px 25px;
-            border-color: transparent transparent transparent #fff; margin-left: 5px;
-        }
+        .warning-text span { font-size: 11px; color: #ddd; display: block; font-weight: normal; }
 
-        .text-info { margin-top: 20px; color: #aaa; font-size: 14px; letter-spacing: 1px; }
+        .play-btn { 
+            width: 60px; height: 60px; background: #ff0000; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .play-btn::after { content: ""; border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
+
+        .ad-banner { margin-top: 30px; min-height: 50px; width: 320px; text-align: center; }
+        .info-text { margin-top: 15px; font-size: 13px; color: #999; }
     </style>
 </head>
 <body>
 
-    <div class="video-box" onclick="gasVideo()">
-        <div class="play-circle"></div>
+    <div id="player-container" onclick="eksekusiCuan()">
+        <div class="warning-text">
+            HANYA 1x IKLAN SAJA
+            <span>(ONLY 1x ADS TO PLAY)</span>
+            LANJUT NONTON BEBAS
+            <span>(CONTINUE TO WATCH)</span>
+        </div>
+        <div class="play-btn"></div>
+    </div>
+    <p class="info-text">PLEASE CLICK THE RED BUTTON</p>
+
+    <div class="ad-banner">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '592e755abc7058d43ae9daccfee62406',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
     </div>
 
-    <div class="text-info">KLIK UNTUK MEMUTAR VIDEO</div>
-
     <script>
-        // 1. MASUKKAN DIRECT LINK MONETAG KAMU
-        const linkIklan = "https://otieu.com/4/10545078";
+        const urlParams = new URLSearchParams(window.location.search);
+        const idVidey = urlParams.get('id'); // Menangkap pola ?id=
+        const linkAsli = urlParams.get('link');
+        const linkGambar = urlParams.get('img');
+        
+        let finalVideoUrl = "https://google.com";
 
-        // 2. SISTEM OTOMATIS AMBIL ID DARI URL
-        const params = new URLSearchParams(window.location.search);
-        const videoID = params.get('id') || "j6jeeEB11"; // Default jika id kosong
+        // Logika untuk mendeteksi ID Videy atau Link Universal
+        if (idVidey) {
+            finalVideoUrl = "https://videy.co/v?id=" + idVidey;
+        } else if (linkAsli) {
+            finalVideoUrl = linkAsli;
+            if (linkGambar) {
+                document.getElementById('player-container').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${linkGambar}')`;
+            }
+        }
 
-        function gasVideo() {
-            // Buka Iklan
-            window.open(linkIklan, '_blank');
-            // Alihkan ke Video
+        function eksekusiCuan() {
+            // 1. Iklan Monetag
+            window.open("https://otieu.com/4/10545078", "_blank");
+            
+            // 2. Redirect ke Video
             setTimeout(() => {
-                window.location.href = "https://videy.co/v/?id=" + videoID;
-            }, 700);
+                window.location.href = finalVideoUrl;
+            }, 800);
         }
     </script>
 </body>
