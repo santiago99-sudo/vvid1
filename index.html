@@ -3,88 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player System</title>
+    <title>Video Player - Verification</title>
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        
-        #player-container { 
-            position: relative; width: 95%; max-width: 500px; aspect-ratio: 16/9; 
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #b30000;
-            background-size: cover; background-position: center; 
-            border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            border: 2px solid #ff0000; cursor: pointer; box-shadow: 0 0 25px rgba(255,0,0,0.4);
-            text-align: center; padding: 15px; box-sizing: border-box;
-        }
-
-        .warning-text {
-            font-weight: bold; font-size: 17px; line-height: 1.4; color: #fff;
-            margin-bottom: 15px; text-shadow: 2px 2px 5px #000;
-        }
-        .warning-text span { font-size: 11px; color: #ddd; display: block; font-weight: normal; }
-
-        .play-btn { 
-            width: 60px; height: 60px; background: #ff0000; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
-        }
-        .play-btn::after { content: ""; border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
-
-        .ad-banner { margin-top: 30px; min-height: 50px; width: 320px; text-align: center; }
-        .info-text { margin-top: 15px; font-size: 13px; color: #999; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .ad-container { border: 2px solid red; border-radius: 20px; padding: 30px 15px; width: 85%; max-width: 380px; background: linear-gradient(to bottom, #1a0000, #000); margin-bottom: 20px; }
+        h2 { font-size: 18px; margin: 5px 0; }
+        p { font-size: 11px; color: #ccc; margin-bottom: 15px; }
+        .play-btn { width: 70px; height: 70px; background: red; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; box-shadow: 0 0 20px rgba(255,0,0,0.5); transition: 0.2s; }
+        .play-btn:active { transform: scale(0.9); }
+        .play-btn svg { width: 35px; fill: white; }
+        .ad-slot { margin-top: 10px; width: 320px; min-height: 50px; }
+        #video-container { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <div id="player-container" onclick="eksekusiCuan()">
-        <div class="warning-text">
-            HANYA 1x IKLAN SAJA
-            <span>(ONLY 1x ADS TO PLAY)</span>
-            LANJUT NONTON BEBAS
-            <span>(CONTINUE TO WATCH)</span>
+    <div id="ad-screen">
+        <div class="ad-container">
+            <h2>HANYA 1x IKLAN SAJA</h2>
+            <p>(ONLY 1x ADS TO PLAY)</p>
+            <h2>LANJUT NONTON BEBAS</h2>
+            <p>(CONTINUE TO WATCH)</p>
+            
+            <button class="play-btn" onclick="handlePlay()">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            
+            <p style="margin-top:15px; color:#888;">PLEASE CLICK THE RED BUTTON</p>
         </div>
-        <div class="play-btn"></div>
-    </div>
-    <p class="info-text">PLEASE CLICK THE RED BUTTON</p>
 
-    <div class="ad-banner">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '592e755abc7058d43ae9daccfee62406',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+        <div class="ad-slot">
+            <script type="text/javascript">
+                atOptions = {'key' : '592e755abc7058d43ae9daccfee62406','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+        </div>
+    </div>
+
+    <div id="video-container">
+        <iframe id="video-frame" src="" allowfullscreen></iframe>
     </div>
 
     <script>
+        // LINK MONETAG TERBARU KAMU
+        const directLink = 'https://otieu.com/4/10545078';
+
         const urlParams = new URLSearchParams(window.location.search);
-        const idVidey = urlParams.get('id'); // Menangkap pola ?id=
-        const linkAsli = urlParams.get('link');
-        const linkGambar = urlParams.get('img');
-        
-        let finalVideoUrl = "https://google.com";
+        const videoUrl = urlParams.get('url');
 
-        // Logika untuk mendeteksi ID Videy atau Link Universal
-        if (idVidey) {
-            finalVideoUrl = "https://videy.co/v?id=" + idVidey;
-        } else if (linkAsli) {
-            finalVideoUrl = linkAsli;
-            if (linkGambar) {
-                document.getElementById('player-container').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${linkGambar}')`;
+        function handlePlay() {
+            if (videoUrl) {
+                // Buka Iklan Baru
+                window.open(directLink, '_blank');
+
+                // Tampilkan Video
+                document.getElementById('ad-screen').style.display = 'none';
+                document.getElementById('video-container').style.display = 'block';
+                document.getElementById('video-frame').src = videoUrl;
             }
-        }
-
-        function eksekusiCuan() {
-            // 1. Iklan Monetag
-            window.open("https://otieu.com/4/10545078", "_blank");
-            
-            // 2. Redirect ke Video
-            setTimeout(() => {
-                window.location.href = finalVideoUrl;
-            }, 800);
         }
     </script>
 </body>
