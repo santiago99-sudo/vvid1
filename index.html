@@ -5,21 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Player - Verification</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .ad-container { border: 2px solid red; border-radius: 20px; padding: 30px 15px; width: 85%; max-width: 380px; background: linear-gradient(to bottom, #1a0000, #000); margin-bottom: 20px; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px 0; }
+        .ad-container { border: 2px solid red; border-radius: 20px; padding: 30px 15px; width: 85%; max-width: 380px; background: linear-gradient(to bottom, #1a0000, #000); margin: 20px 0; }
         h2 { font-size: 18px; margin: 5px 0; }
         p { font-size: 11px; color: #ccc; margin-bottom: 15px; }
         .play-btn { width: 70px; height: 70px; background: red; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; box-shadow: 0 0 20px rgba(255,0,0,0.5); transition: 0.2s; }
         .play-btn:active { transform: scale(0.9); }
         .play-btn svg { width: 35px; fill: white; }
-        .ad-slot { margin-top: 10px; width: 320px; min-height: 50px; }
-        #video-container { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: #000; }
+        .ad-slot { width: 320px; min-height: 50px; margin: 10px 0; }
+        #video-container { display: none; width: 100%; height: 100vh; position: absolute; top: 0; left: 0; background: #000; z-index: 100; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
     <div id="ad-screen">
+        <div class="ad-slot">
+            <p style="font-size:10px; color:#444;">ADVERTISEMENT</p>
+        </div>
+
         <div class="ad-container">
             <h2>HANYA 1x IKLAN SAJA</h2>
             <p>(ONLY 1x ADS TO PLAY)</p>
@@ -46,7 +50,7 @@
     </div>
 
     <script>
-        // LINK MONETAG TERBARU KAMU
+        // 3. MONETAG DIRECT LINK (Hanya muncul tiap 30 menit)
         const directLink = 'https://otieu.com/4/10545078';
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -54,14 +58,32 @@
 
         function handlePlay() {
             if (videoUrl) {
-                // Buka Iklan Baru
-                window.open(directLink, '_blank');
-
-                // Tampilkan Video
+                const hasSeenAds = getCookie("ads_cooldown");
+                if (!hasSeenAds) {
+                    window.open(directLink, '_blank');
+                    setCookie("ads_cooldown", "true", 30);
+                }
                 document.getElementById('ad-screen').style.display = 'none';
                 document.getElementById('video-container').style.display = 'block';
                 document.getElementById('video-frame').src = videoUrl;
             }
+        }
+
+        function setCookie(name, value, minutes) {
+            const d = new Date();
+            d.setTime(d.getTime() + (minutes * 60 * 1000));
+            document.cookie = name + "=" + value + ";expires="+ d.toUTCString() + ";path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0;i < ca.length;i++) {
+                let c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
     </script>
 </body>
