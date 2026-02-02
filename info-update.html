@@ -35,21 +35,24 @@
     </div>
 
     <script>
-        fetch('daftar-link.txt')
-            .then(response => response.text())
-            .then(data => {
-                const container = document.getElementById('list-container');
-                container.innerHTML = '';
-                const links = data.split('\n').filter(line => line.trim() !== '');
-                links.forEach((link, index) => {
-                    const card = document.createElement('a');
-                    card.href = link.trim();
-                    card.className = 'card';
-                    card.innerHTML = `<div><b>Update Part #${index + 1}</b><br><span style="font-size:11px; color:#555;">Kualitas Terjamin • Baru</span></div><div style="color:#ff0000; font-weight:bold;">NONTON</div>`;
-                    container.appendChild(card);
-                });
-            })
-            .catch(err => { console.error('Gagal mengambil data link'); });
-    </script>
+    fetch('daftar-link.txt')
+        .then(response => response.text())
+        .then(data => {
+            const container = document.getElementById('list-container');
+            container.innerHTML = '';
+            const links = data.split('\n').filter(line => line.trim() !== '');
+            links.forEach((link, index) => {
+                const card = document.createElement('a');
+                
+                // Ini 'kuncinya' agar mampir ke index.html dulu
+                card.href = `index.html?url=${encodeURIComponent(link.trim())}`;
+                
+                card.className = 'card';
+                card.innerHTML = `<div><b>Update Part #${index + 1}</b><br><span style="font-size:11px; color:#555;">Kualitas HD • Baru</span></div><div style="color:#ff0000; font-weight:bold;">NONTON</div>`;
+                container.appendChild(card);
+            });
+        });
+</script>
+
 </body>
 </html>
