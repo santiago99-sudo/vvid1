@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Update System</title>
+    <style>
+        body { background: #0f0f0f; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #333; width: 100%; margin-bottom: 20px; }
+        .header h1 { font-size: 20px; color: #ff0000; margin: 0; }
+        .container { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 10px; }
+        .card { background: #1a1a1a; border-left: 4px solid #ff0000; padding: 15px; border-radius: 8px; text-decoration: none; color: #fff; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .card:active { transform: scale(0.98); background: #222; }
+        .ad-slot { margin: 15px 0; width: 320px; min-height: 50px; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>INFO UPDATE HARIAN</h1><p style="font-size:12px; color:#666;">Silakan pilih data yang ingin diakses</p></div>
+
+    <div class="ad-slot">
+        <script type="text/javascript">
+            atOptions = {'key' : '592e755abc7058d43ae9daccfee62406','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+    </div>
+
+    <div id="list-container" class="container">
+        <p style="text-align:center; color:#444;">Memproses data...</p>
+    </div>
+
+    <div class="ad-slot">
+        <script type="text/javascript">
+            atOptions = {'key' : '592e755abc7058d43ae9daccfee62406','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+    </div>
+
+    <script>
+        fetch('daftar-link.txt')
+            .then(response => response.text())
+            .then(data => {
+                const container = document.getElementById('list-container');
+                container.innerHTML = '';
+                const links = data.split('\n').filter(line => line.trim() !== '');
+                links.forEach((link, index) => {
+                    const card = document.createElement('a');
+                    card.href = link.trim();
+                    card.className = 'card';
+                    // Menampilkan nomor urut untuk setiap link
+                    card.innerHTML = `<div><b>Database File #${index + 1}</b><br><span style="font-size:11px; color:#555;">Update Terverifikasi • Baru</span></div><div style="color:#ff0000; font-weight:bold;">LIHAT</div>`;
+                    container.appendChild(card);
+                });
+            })
+            .catch(err => { document.getElementById('list-container').innerHTML = 'Gagal memuat daftar.'; });
+    </script>
+</body>
+</html>
