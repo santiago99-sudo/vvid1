@@ -4,34 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Update Harian</title>
+    
+    <script src="https://quge5.com/88/tag.min.js" data-zone="208248" async data-cfasync="false"></script>
+
     <style>
         body { background: #0f0f0f; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .header { text-align: center; padding: 20px 0; border-bottom: 1px solid #333; width: 100%; margin-bottom: 20px; }
-        .header h1 { font-size: 20px; color: #ff0000; margin: 0; text-transform: uppercase; }
+        .header h1 { font-size: 20px; color: #ff0000; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
         .container { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 12px; }
-        .card { background: #1a1a1a; border-left: 4px solid #ff0000; padding: 15px; border-radius: 8px; text-decoration: none; color: #fff; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .card { background: #1a1a1a; border-left: 4px solid #ff0000; padding: 15px; border-radius: 8px; text-decoration: none; color: #fff; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .card:active { background: #333; transform: scale(0.97); }
-        .ad-slot { margin: 15px 0; width: 320px; min-height: 50px; background: #222; border-radius: 5px; }
+        .btn-nonton { color:#ff0000; font-weight:bold; font-size: 14px; border: 1px solid #ff0000; padding: 5px 10px; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>INFO UPDATE HARIAN</h1><p style="font-size:12px; color:#777;">Data terverifikasi otomatis setiap jam</p></div>
-
-    <div class="ad-slot">
-        <script type="text/javascript">
-            atOptions = {'key' : '592e755abc7058d43ae9daccfee62406','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+    <div class="header">
+        <h1>INFO UPDATE HARIAN</h1>
+        <p style="font-size:12px; color:#777;">Data terverifikasi otomatis setiap jam</p>
     </div>
 
     <div id="list-container" class="container">
-        </div>
-
-    <div class="ad-slot">
-        <script type="text/javascript">
-            atOptions = {'key' : '592e755abc7058d43ae9daccfee62406','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/592e755abc7058d43ae9daccfee62406/invoke.js"></script>
+        <p style="text-align: center; color: #444;">Mengambil data video...</p>
     </div>
 
     <script>
@@ -41,18 +34,26 @@
             const container = document.getElementById('list-container');
             container.innerHTML = '';
             const links = data.split('\n').filter(line => line.trim() !== '');
-            links.forEach((link, index) => {
+            
+            links.reverse().forEach((link, index) => {
                 const card = document.createElement('a');
-                
-                // Ini 'kuncinya' agar mampir ke index.html dulu
                 card.href = `index.html?url=${encodeURIComponent(link.trim())}`;
-                
                 card.className = 'card';
-                card.innerHTML = `<div><b>Update Part #${index + 1}</b><br><span style="font-size:11px; color:#555;">Kualitas HD • Baru</span></div><div style="color:#ff0000; font-weight:bold;">NONTON</div>`;
+                const partNumber = links.length - index;
+                
+                card.innerHTML = `
+                    <div>
+                        <b>Update Part #${partNumber}</b><br>
+                        <span style="font-size:11px; color:#555;">Kualitas HD • Baru Diunggah</span>
+                    </div>
+                    <div class="btn-nonton">NONTON</div>
+                `;
                 container.appendChild(card);
             });
+        })
+        .catch(err => {
+            document.getElementById('list-container').innerHTML = 'Gagal memuat daftar video.';
         });
-</script>
-
+    </script>
 </body>
 </html>
