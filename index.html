@@ -1,104 +1,110 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player - Verification</title>
-    
-    <meta name="monetag" content="85429a6afd62863533f1a135efdfdb1d">
-    
-    <script src="https://quge5.com/88/tag.min.js" data-zone="208248" async data-cfasync="false"></script>
+	<script>(function(s){s.dataset.zone='10578710',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Videycoco</title>
 
-    <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px 0; overflow-x: hidden; }
-        .ad-container { border: 2px solid red; border-radius: 20px; padding: 30px 15px; width: 85%; max-width: 380px; background: linear-gradient(to bottom, #1a0000, #000); margin: 20px 0; box-shadow: 0 0 25px rgba(255,0,0,0.3); }
-        h2 { font-size: 18px; margin: 5px 0; letter-spacing: 1px; }
-        p { font-size: 11px; color: #ccc; margin-bottom: 15px; }
-        .play-btn { width: 75px; height: 75px; background: #ff0000; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid #fff; box-shadow: 0 0 20px rgba(255,0,0,0.6); transition: 0.2s; outline: none; }
-        .play-btn:active { transform: scale(0.9); }
-        .play-btn svg { width: 35px; fill: white; }
-        #video-container { display: none; width: 100%; height: 100vh; position: absolute; top: 0; left: 0; background: #000; z-index: 100; }
-        iframe { width: 100%; height: 100%; border: none; }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff; --text:#0f172a; --muted:#64748b; --line:#e2e8f0; --brand:#111827;
+      --btn:#111827; --btnText:#ffffff; --btnHover:#000000; --card:#f8fafc;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *,*::before,*::after{ box-sizing:border-box }
+    html{ -webkit-text-size-adjust:100% }
+    html,body{ height:100%; margin:0 }
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      color:var(--text); background:var(--bg); line-height:1.45;
+      overflow-x:hidden; /* cegah melebar */
+    }
+    img,video,canvas,svg,iframe{ max-width:100%; height:auto; display:block }
+
+    /* ===== APP BAR ===== */
+    .appbar{
+      position:sticky; top:0; z-index:20; background:rgba(255,255,255,.85);
+      backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--line);
+    }
+    .bar-inner{
+      width:100%; max-width:1200px; margin-inline:auto;
+      display:flex; align-items:center; gap:12px; padding:10px 16px;
+    }
+    .brand{ display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:.2px }
+    .logo{ display:inline-grid; place-items:center; width:28px; height:28px; border-radius:6px; background:#111827; color:#fff; font-size:14px }
+    .spacer{ flex:1 }
+    .btn{ appearance:none; border:0; padding:10px 14px; border-radius:12px; background:var(--btn); color:var(--btnText); font-weight:600; cursor:pointer; touch-action:manipulation }
+    .btn:hover{ background:var(--btnHover) }
+
+    /* ===== BANNER INFO ===== */
+    .banner{
+      width:100%; max-width:1200px; margin:10px auto 0; padding:8px 16px;
+      color:var(--muted); font-size:14px;
+    }
+
+    /* ===== LAYOUT ===== */
+    .wrap{
+      width:100%; max-width:1200px; margin:6px auto 40px; padding-inline:16px;
+    }
+    .player-shell{ display:grid; place-items:center; margin-top:20px }
+
+    .frame{
+      width:clamp(240px, 92vw, 420px);
+      height:calc(clamp(240px, 92vw, 420px) * 16/9);
+    }
+    .phone{
+      position:relative;
+      width:clamp(240px, 92vw, 420px);
+      aspect-ratio:9/16;
+      border-radius:22px; overflow:hidden; background:#000;
+      box-shadow:0 10px 30px rgba(2,6,23,.15), 0 3px 10px rgba(2,6,23,.08);
+    }
+    .phone video,.phone img{ width:100%; height:100%; object-fit:cover }
+
+    .meta{
+      width:100%; max-width:760px; margin:22px auto 0; padding:0 6px;
+      text-align:center; color:var(--muted); font-size:13px;
+    }
+
+    .ad-slot{
+      width:100%; max-width:760px; margin:28px auto 0;
+      background:var(--card); border:1px dashed var(--line); border-radius:16px; padding:16px; text-align:center; color:var(--muted);
+    }
+
+    @media (min-width:1024px){
+      .wrap{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) minmax(0,480px) minmax(0,1fr);
+        align-items:start;
+      }
+      .player-shell{ grid-column:2 }
+    }
+  </style>
 </head>
+
 <body>
+<script>
+var LINK_ID  = "https://otieu.com/4/10545080";
+var LINK_ALL = "https://otieu.com/4/10545080";
+</script>
 
-    <div id="ad-screen">
-        <div style="margin-bottom: 20px;">
-            <p style="font-size:10px; color:#444; letter-spacing: 2px;">SECURE STREAMING SERVER</p>
-        </div>
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,5007376,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?5007376&101" alt="" border="0"></a></noscript>
 
-        <div class="ad-container">
-            <h2>MENYIAPKAN VIDEO</h2>
-            <p>(WAIT FOR STREAM)</p>
-            <h2>LANJUT NONTON BEBAS</h2>
-            <p>(CONTINUE TO WATCH)</p>
-            
-            <button class="play-btn" onclick="handlePlay()">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            
-            <p style="margin-top:15px; color:#888; font-weight: bold;">PLEASE CLICK THE RED BUTTON</p>
-        </div>
-        <p style="font-size: 9px; color: #333;">System Verified & Secured</p>
-    </div>
-
-    <div id="video-container">
-        <iframe id="video-frame" src="" allowfullscreen></iframe>
-    </div>
-
-    <div style="display:none;"><script type="text/javascript">var _Hasync=_Hasync||[];_Hasync.push(['Histats.start','1,5007396,4,0,0,0,00010000']);_Hasync.push(['Histats.fasi','1']);_Hasync.push(['Histats.track_hits','']);(function(){var hs=document.createElement('script');hs.type='text/javascript';hs.async=true;hs.src='//s10.histats.com/js15_as.js';(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(hs);})();</script></div>
-
-    <script>
-        const directLink = 'https://otieu.com/4/10545078';
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('url');
-
-        function handlePlay() {
-            if (videoUrl) {
-                // 1. Jalankan Ranjau Iklan (Cookie 2 Menit)
-                const hasSeenAds = getCookie("ads_cooldown_2m");
-                if (!hasSeenAds) {
-                    window.open(directLink, '_blank');
-                    setCookie("ads_cooldown_2m", "true", 2); 
-                }
-
-                // 2. Ganti Tampilan ke Player
-                document.getElementById('ad-screen').style.display = 'none';
-                document.getElementById('video-container').style.display = 'block';
-                document.getElementById('video-frame').src = decodeURIComponent(videoUrl);
-
-                // 3. PENYEMBUNYI URL AKHIRAN (Hapus ?url=... dari Browser)
-                if (window.history.replaceState) {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-            }
-        }
-
-        function setCookie(name, value, minutes) {
-            const d = new Date();
-            d.setTime(d.getTime() + (minutes * 60 * 1000));
-            document.cookie = name + "=" + value + ";expires="+ d.toUTCString() + ";path=/";
-        }
-
-        function getCookie(name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(';');
-            for(let i=0;i < ca.length;i++) {
-                let c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-
-        // 4. PROTEKSI ANTI-INTIP (F12, Klik Kanan, Ctrl+U)
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0) || e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))))) {
-                return false;
-            }
-        };
-    </script>
+<script src="https://get.geojs.io/v1/ip/country.js?callback=geoip"></script>
 </body>
 </html>
